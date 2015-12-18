@@ -14,7 +14,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
     case RubyRules.get_command(message)
     when nil
     when '/start','/start@RubyRulesBot'
-      cmd = RubyRules::Hello.new(message)
+      cmd = RubyRules::Start.new(message)
       bot.api.send_message(chat_id: message.chat.id, text: cmd.response)
     when '/stop','/stop@RubyRulesBot'
       cmd = RubyRules::Stop.new(message)
