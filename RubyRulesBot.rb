@@ -3,9 +3,10 @@ require_relative 'ruby_rules/ruby_rules'
 require_relative 'ruby_rules/start'
 require_relative 'ruby_rules/stop'
 
-token = 'TOKEN'
+TOKEN = 'TOKEN'
+DEBUG = true
 
-Telegram::Bot::Client.run(token) do |bot|
+Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
 
     RubyRules::Debug.message_text(DEBUG,message)
