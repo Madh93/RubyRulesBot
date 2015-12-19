@@ -5,7 +5,9 @@ module RubyRules
   end
 
   def self.get_argument(msg)
-    cmd = msg.text.split(get_command(msg))
-    cmd.empty? ? "" : "#{cmd.last}"
+    if !msg.text.nil?
+      cmd = msg.text.split(get_command(msg))
+      cmd.empty? ? "" : "#{cmd.last}"
+    end
   end
 end
