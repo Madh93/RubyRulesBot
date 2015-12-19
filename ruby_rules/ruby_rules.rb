@@ -1,5 +1,3 @@
-require_relative 'error'
-require_relative 'debug'
 require_relative 'utils'
 
 module RubyRules

@@ -1,7 +1,5 @@
 require 'telegram/bot'
-require_relative 'ruby_rules/ruby_rules'
-require_relative 'ruby_rules/start'
-require_relative 'ruby_rules/stop'
+require_relative 'ruby_rules'
 
 TOKEN = 'TOKEN'
 DEBUG = true
@@ -9,9 +7,9 @@ DEBUG = true
 Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
     begin
-      RubyRules::Debug.message_text(DEBUG,message)
+      RubyRules::Utils::Debug.message_text(DEBUG,message)
 
-      case RubyRules.get_command(message)
+      case RubyRules::Utils.get_command(message)
       when nil
       when '/start','/start@RubyRulesBot'
         cmd = RubyRules::Start.new(message)
@@ -27,7 +25,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
         bot.api.send_message(chat_id: message.chat.id, text: "#{begin;eval(e = eval_cmd);rescue Exception => exc;"Syntax Error!";end}")
       end
     rescue Telegram::Bot::Exceptions::ResponseError => e
-      RubyRules::Error.handle(e)  
+      RubyRules::Utils::Error.handle(e)  
     end    
   end
 end
