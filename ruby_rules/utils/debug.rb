@@ -12,6 +12,7 @@ module RubyRules
               cmd: Utils.get_command(msg),
               arg: Utils.get_argument(msg)         
             }
+            File.open("rubyrules.log", 'a') { |f| f.puts("#Message: #{msg_hash}") }
             puts "#Message: #{msg_hash}"
           end
         end
