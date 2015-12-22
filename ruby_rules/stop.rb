@@ -3,7 +3,6 @@ module RubyRules
    
     def initialize(msg)
       super(msg)
-      response
     end
 
     def response
