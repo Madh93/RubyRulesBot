@@ -23,10 +23,30 @@ module RubyRules
       end
     end
 
+    def add_capture_stdout(str_out)
+      @sentences.insert(str_out-1,"sTr_OuT=''")
+      value = @sentences[str_out] 
+      ["puts ","print "].each do |p|
+        value.gsub!(p,"sTr_OuT += Utils.capture_stdout { p ") if value.include? p
+      end
+      @sentences[str_out] = value << "}"
+      @sentences.insert(str_out+1,"p sTr_OuT")
+    end
+
     def eval_sentences
-      @sentences.each do |x| 
-        x.gsub!("puts","p") if x.include?"puts"  # Puts && Eval -> :(
-        x.gsub!("print","p") if x.include?"puts"  # Print && Eval -> :(
+
+      str_out = 0
+
+      # Find last console output
+      @sentences.each_with_index do |sentence,i| 
+        ["puts ","print "].each do |p|
+          str_out = i+1 if sentence.include? p
+        end
+      end
+
+      # Allow to show output
+      if str_out > 0
+        add_capture_stdout(str_out)
       end
 
       begin

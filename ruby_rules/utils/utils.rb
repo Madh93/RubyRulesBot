@@ -1,3 +1,5 @@
+require 'stringio'
+
 module RubyRules
   module Utils
 
@@ -11,6 +13,17 @@ module RubyRules
         cmd.empty? ? "" : "#{cmd.last}"
       end
     end
+
+    def self.capture_stdout
+      begin
+        old_stdout = $stdout
+        $stdout = StringIO.new('','w')
+        yield
+        $stdout.string
+      ensure
+        $stdout = old_stdout
+      end
+    end    
     
   end
 end
