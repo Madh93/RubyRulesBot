@@ -1,10 +1,9 @@
 require 'telegram/bot'
 require_relative 'ruby_rules'
 
-TOKEN = 'TOKEN'
 DEBUG = true
 
-Telegram::Bot::Client.run(TOKEN) do |bot|
+Telegram::Bot::Client.run(File.readlines("TOKEN").join) do |bot|
   bot.listen do |message|
     begin
       case RubyRules::Utils.get_command(message)
